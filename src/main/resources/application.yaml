@@ -14,3 +14,13 @@ spring:
     url: jdbc:postgresql://localhost:5432/news_aggregator
     username: postgres
     password: root
+
+security:
+  jwt:
+    secret-key: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
+    expiration-time: 3600000
+
+news:
+  service:
+    location: https://newsapi.org
+  api-key: 7c6b34f617b946a68e0911fb73ce2204

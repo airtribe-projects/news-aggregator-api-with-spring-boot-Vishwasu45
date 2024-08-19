@@ -1,5 +1,6 @@
 package com.news.usermanagement.controller;
 
+import com.news.usermanagement.contract.UserDto;
 import com.news.usermanagement.model.User;
 import com.news.usermanagement.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +17,12 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/register")
-    public void registerUser(@RequestBody User user) {
-        userService.registerUser(user);
+    public void registerUser(@RequestBody UserDto userDto) {
+        userService.registerUser(userDto);
     }
 
     @PostMapping("/login")
-    public User loginUser(@RequestBody User user) {
-        return userService.loginUser(user.getUsername(), user.getPassword());
+    public String loginUser(@RequestBody UserDto userDto) {
+        return userService.loginUser(userDto.getEmail(), userDto.getPassword());
     }
 }

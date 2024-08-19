@@ -1,10 +1,10 @@
 package com.news.usermanagement.service;
 
-import com.news.usermanagement.model.User;
+import com.news.usermanagement.contract.UserDto;
 
 public interface UserService {
 
-    void registerUser(User user);
+    void registerUser(UserDto user);
 
-    User loginUser(String username, String password);
+    String loginUser(String email, String password);
 }

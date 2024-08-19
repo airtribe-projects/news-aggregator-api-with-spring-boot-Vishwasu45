@@ -1,10 +1,14 @@
 package com.news.usermanagement.service.impl;
 
+import com.news.usermanagement.config.JwtHelper;
+import com.news.usermanagement.contract.UserDto;
+import com.news.usermanagement.mapper.UserMapper;
 import com.news.usermanagement.model.User;
 import com.news.usermanagement.repository.UserRepository;
 import com.news.usermanagement.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -15,23 +19,21 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserMapper userMapper;
+
+    private final AuthenticationManager authenticationManager;
+
+    private final JwtHelper jwtHelper;
 
     @Override
-    public void registerUser(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setId(UUID.randomUUID());
+    public void registerUser(UserDto userDto) {
+        var user = userMapper.mapUserDtoToUser(userDto);
         userRepository.save(user);
     }
 
     @Override
-    public User loginUser(String username, String password) {
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
-        if (bCryptPasswordEncoder.matches(password, user.getPassword())) {
-            //Generate JWT token
-            return user;
-        } else {
-            throw new RuntimeException("Invalid credentials");
-        }
+    public String loginUser(String email, String password) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+        return jwtHelper.generateToken(new User(email, password));
     }
 }
