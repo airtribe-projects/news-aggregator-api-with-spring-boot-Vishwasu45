@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: News-Aggregator
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/news_aggregator
+    username: postgres
+    password: root
+
+security:
+  jwt:
+    secret-key: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
+    expiration-time: 3600000
+
+news:
+  client:
+    location: https://newsapi.org
+    api-key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
