@@ -3,12 +3,11 @@ spring:
     name: News-Aggregator
   jpa:
     show-sql: true
-    properties:
+    hibernate:
+      ddl-auto: update
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        type:
-          preferred_uuid_jdbc_type: UUID
   datasource:
     driverClassName: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/news_aggregator
@@ -21,6 +20,6 @@ security:
     expiration-time: 3600000
 
 news:
-  service:
+  client:
     location: https://newsapi.org
-  api-key: 7c6b34f617b946a68e0911fb73ce2204
+    api-key: 7c6b34f617b946a68e0911fb73ce2204
