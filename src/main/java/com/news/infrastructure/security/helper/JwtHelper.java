@@ -23,7 +23,8 @@ public class JwtHelper {
     @Value("${security.jwt.secret-key:xxxxxxxx}")
     private String secretKey;
 
-    @Value("${security.jwt.expiration-time}")
+    @NotNull
+    @Value("${security.jwt.expiration-time:3600}")
     private long jwtExpiration;
 
     public String extractUsername(String token) {
@@ -35,23 +36,23 @@ public class JwtHelper {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+    public String generateToken(String principal) {
+        return generateToken(new HashMap<>(), principal);
     }
 
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        return buildToken(extraClaims, userDetails, jwtExpiration);
+    public String generateToken(Map<String, Object> extraClaims, String principal) {
+        return buildToken(extraClaims, principal, getDefaultExpirationDuration());
     }
 
-    public long getDefaultExpirationTime() {
+    public long getDefaultExpirationDuration() {
         return jwtExpiration;
     }
 
-    private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
+    private String buildToken(Map<String, Object> extraClaims, String principal, long expiration) {
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
+                .setSubject(principal)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)

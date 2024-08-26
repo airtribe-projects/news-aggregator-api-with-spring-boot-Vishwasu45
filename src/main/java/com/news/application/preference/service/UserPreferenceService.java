@@ -4,8 +4,10 @@ import com.news.application.preference.contract.PreferenceDto;
 import com.news.application.preference.mapper.PreferenceMapper;
 import com.news.infrastructure.dataprovider.repository.PreferenceRepository;
 import com.news.infrastructure.dataprovider.repository.UserRepository;
+import com.news.infrastructure.exception.NewsAggregatorException;
 import com.news.infrastructure.security.helper.UserContextHelper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,7 +21,7 @@ public class UserPreferenceService {
     private final UserContextHelper userContextHelper;
 
     public void saveUserPreference(PreferenceDto preferenceDto) {
-        var user = userRepository.findById(userContextHelper.getUserIdFromContext()).orElseThrow(() -> new RuntimeException("User not found"));
+        var user = userRepository.findById(userContextHelper.getUserIdFromContext()).orElseThrow(() -> new NewsAggregatorException(HttpStatus.NOT_FOUND, "User not found"));
         preferenceRepository.findByUserId(user.getId()).forEach(preferenceRepository::delete);
         var list = preferenceDto.getName()
                 .stream()

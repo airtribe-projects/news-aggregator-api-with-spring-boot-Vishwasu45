@@ -5,7 +5,6 @@ import com.news.infrastructure.dataprovider.model.Preference;
 import com.news.infrastructure.dataprovider.model.User;
 import lombok.experimental.UtilityClass;
 
-import java.util.Collections;
 import java.util.List;
 
 @UtilityClass

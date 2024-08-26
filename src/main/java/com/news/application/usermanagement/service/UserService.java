@@ -4,7 +4,7 @@ import com.news.application.usermanagement.contract.UserDto;
 
 public interface UserService {
 
-    void registerUser(UserDto user);
+    void registerUser(UserDto userDto);
 
-    String loginUser(String email, String password);
+    String loginUser(UserDto userDto);
 }
