@@ -22,4 +22,4 @@ security:
 news:
   client:
     location: https://newsapi.org
-    api-key: 7c6b34f617b946a68e0911fb73ce2204
+    api-key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
