@@ -8,7 +8,6 @@ import com.news.infrastructure.dataprovider.repository.PreferenceRepository;
 import com.news.infrastructure.security.helper.UserContextHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 import java.util.Map;
